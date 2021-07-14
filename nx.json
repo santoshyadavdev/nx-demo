@@ -33,6 +33,13 @@
     "ordermanagement-e2e": {
       "tags": [],
       "implicitDependencies": ["ordermanagement"]
+    },
+    "product-management": {
+      "tags": []
+    },
+    "product-management-e2e": {
+      "tags": [],
+      "implicitDependencies": ["product-management"]
     }
   }
 }

@@ -119,9 +119,129 @@
           }
         }
       }
+    },
+    "product-management": {
+      "projectType": "application",
+      "root": "apps/product-management",
+      "sourceRoot": "apps/product-management/src",
+      "prefix": "nxdemo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/product-management",
+            "index": "apps/product-management/src/index.html",
+            "main": "apps/product-management/src/main.ts",
+            "polyfills": "apps/product-management/src/polyfills.ts",
+            "tsConfig": "apps/product-management/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/product-management/src/favicon.ico",
+              "apps/product-management/src/assets"
+            ],
+            "styles": ["apps/product-management/src/styles.scss", "node_modules/bootstrap/dist/css/bootstrap.min.css"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/product-management/src/environments/environment.ts",
+                  "with": "apps/product-management/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "product-management:build:production"
+            },
+            "development": {
+              "browserTarget": "product-management:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "product-management:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/product-management/src/**/*.ts",
+              "apps/product-management/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/product-management"],
+          "options": {
+            "jestConfig": "apps/product-management/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "product-management-e2e": {
+      "root": "apps/product-management-e2e",
+      "sourceRoot": "apps/product-management-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/product-management-e2e/cypress.json",
+            "tsConfig": "apps/product-management-e2e/tsconfig.e2e.json",
+            "devServerTarget": "product-management:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "product-management:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/product-management-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   },
   "cli": {
+    "analytics": false,
     "defaultCollection": "@nrwl/angular"
   },
   "schematics": {
